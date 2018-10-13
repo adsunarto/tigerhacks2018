@@ -9,7 +9,7 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 
 # GOOGLE_APPLICATION_CREDENTIALS requirement to use Google Translation API
-credential_path = "D:/Desktop/translate/service_account_sr.json"
+credential_path = "service_account_sr.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 # Instantiates a client
