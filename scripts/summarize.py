@@ -58,16 +58,28 @@ def get_sentences(words):
             lemma = p.lemma_
             points += point(lemma)
         sentences.append(sentence(s,points))
+# Maps the sentences to all of it's original index for relevance
+originals = {}
+def original_pos(sentences):
+    for index, sent in enumerate(sentences):
+        originals[sent.get_ss()] = index
+
+
 # Outputs x number of top sentences.
 def summary(sentences, x):
     if x >= len(sentences) or x == 0:
-        print (' '.join([s.get_ss() for s in sentences[::-1]]))
+        print (' '.join([s.get_ss() for s in sentences]))
     else:
-        print (' '.join([s.get_ss() for s in sentences[::-1][:x]]))
+        ss = sorted(sentences)
+        final_s = []
+        for s in ss[::-1][:x]:
+            final_s.append(originals.get(s.get_ss()))
+        final_s.sort()
+        print (' '.join([sentences[s].get_ss() for s in final_s]))
 
 
 
 word_parse(doc, occurence)
 get_sentences(doc)
-sentences.sort()
+original_pos(sentences)
 summary(sentences, num_of_sen)
