@@ -59,3 +59,10 @@ typings/
 
 # next.js build output
 .next
+
+*.mp3
+*.wav
+*.ogg
+*.flac
+
+service_account_sr.json
