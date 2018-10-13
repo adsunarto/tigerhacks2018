@@ -66,3 +66,5 @@ typings/
 *.flac
 
 service_account_sr.json
+
+*.txt
