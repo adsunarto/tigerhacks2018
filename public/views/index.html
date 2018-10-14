@@ -1,10 +1,47 @@
 <html>
   <head>
-      <title>TigerHacks2018</title>
+      <title>TigerHacks2018</title>            
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>     
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.0.0/trix.js"></script>  
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap-grid.min.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.0.0/trix.css" />  
+      <script src="../js/main.js"></script>
+      <link rel="stylesheet" href="../styles/styles.css">   
   </head>
 
   <body>
-    <p><i>This is part of the page</i></p>
-    <p><strong>BOLDED YAY</strong></p>
+    <div id="closest">
+      <div class="row" id="page1">      
+          <div class="col-4">
+            <div id="drop-zone">
+                Drop files here...
+                <div id="clickHere">
+                    or click here..                     
+                    <input type="file" name="file" id="file" />                    
+                </div>
+            </div>                       
+            <button id="record">Record</button>
+          </div>
+
+          <div class="col-8">
+              <trix-editor class="tx1" placeholder="Edit Me"></trix-editor>
+              <button id="next">Next</button>           
+          </div>      
+      </div> 
+        
+      <div class=row id="page2" >
+        <div class="col-6">
+          <trix-editor class="tx2"></trix-editor>
+        </div>
+        
+        <div class="col-6">
+          <trix-editor class="tx2"></trix-editor>
+        </div>
+
+        <button id="download">Download</button>
+      </div>
+    </div>    
   </body>
+
 </html>

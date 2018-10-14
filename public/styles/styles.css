@@ -1,0 +1,105 @@
+html, body{
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#drop-zone {    
+  width: 450px;    
+  height: 350px;
+  position:absolute;
+  left:0%;
+  top: 0%;  
+  border: 2px dashed rgba(0,0,0,.3);
+  border-radius: 20px;
+  font-family: Arial;
+  text-align: center;
+  position: relative;
+  line-height: 180px;
+  font-size: 20px;
+  color: rgba(0,0,0,.3);
+}
+
+#drop-zone input {    
+  position: absolute;    
+  cursor: pointer;
+  left: 0px;
+  top: 0px;      
+  opacity:0;
+}
+
+#drop-zone.mouse-over {
+  border: 2px dashed rgba(0,0,0,.5);
+  color: rgba(0,0,0,.5);
+}
+
+/*Replaces the button*/
+#clickHere {
+  position: absolute;
+  cursor: pointer;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: 20px;
+  line-height: 26px;
+  color: white;
+  font-size: 12px;
+  width: 100px;
+  height: 26px;
+  border-radius: 4px;
+  background-color: #3b85c3;
+
+}
+
+#clickHere:hover {
+  background-color: #4499DD;
+}
+
+button {
+  margin-top: 10px;
+}
+
+#transcribe {
+  color: white;
+  cursor: pointer;
+  width: 100px;
+  height: 26px;
+  border-radius: 4px;
+  background-color: #3b85c3;
+
+}
+
+#record {
+  color: white;
+  cursor: pointer;
+  width: 105%;
+  height: 26px;
+  border-radius: 4px;
+  background-color: #3b85c3;
+  margin-left: 0;
+}
+
+#next {
+  position: fixed;
+  color: white;
+  cursor: pointer;
+  width: 200px;
+  height: 52px;
+  border-radius: 4px;
+  background-color: #3b85c3;
+  right: 7;
+  bottom: 7;
+}
+
+#page1 {
+  display: fixed;
+}
+
+#page2 {
+  visibility: hidden;
+}
+
+#download {
+  position: absso;
+  right: 7;
+  bottom: 7;
+}
