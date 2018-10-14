@@ -69,9 +69,26 @@ function prevPage() {
 async function translate() {
   console.log('TRANS')
   // TODO: Request to translate
-  $('.tx3')[0].editor.loadHTML('TODO')
+  let response
+  try {
+    response = await (await fetch('/api/translate/' + state.targetLocale, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        text: $('.tx2')[0].editor.composition.document.toString()
+      })
+    })).text()
+  } catch (e) {
+    response = 'Error translating.'
+  }
+
+  console.log('RE', response);
+  $('.tx3')[0].editor.loadHTML(response)
   setState({
-    translated: true
+    translated: true,
+    translatedContents: response
   })
 }
 

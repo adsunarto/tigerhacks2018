@@ -4,8 +4,11 @@ const path = require('path')
 const multer = require('multer')
 const textract = require('textract')
 const mime = require('mime-types')
+const bodyParser = require('body-parser')
 const log = require('npmlog')
-const transcribeFromWav = require('../../scripts/transcript.js')
+const isoLang = require('iso-639-1')
+const transcribeFromWav = require('../../scripts/transcript')
+const translate = require('../../scripts/translate')
 
 const app = require('express').Router()
 
@@ -49,7 +52,6 @@ const upload = multer({
   }
 })
 
-// TODO: Filter docx and doc files and use textract
 function convertToWav(audioFile, type) {
   return new Promise((resolve, reject) => {
     exec(`python3 ${path.join(__dirname, '../../scripts/converttowav.py')} ${audioFile.path}`, (err, wavFile) => {
@@ -115,6 +117,23 @@ app.post('/transcribe', upload.array('uploads[]'), async (req, res) => {
   }
 
   res.json(r)
+})
+
+app.post('/translate/:language', bodyParser.text(), async (req, res) => {
+  let target = req.params['language']
+  if (!isoLang.validate(target)) return res.status(400).send('Invalid target language')
+  console.log('BODY', req.body.text)
+  try {
+    let translated = await translate(req.body.text, target)
+    return res.send(translated)
+  } catch (e) {
+    log.warn('translate', 'error translating to ' + target, e.message)
+    res.status(400).send('Error translating...')
+  }
+})
+
+app.post('/summary/:length', (req, res) => {
+  let sentences = req.params['length']
 })
 
 module.exports = app
