@@ -70,7 +70,7 @@ function extractText(documentFile) {
   })
 }
 
-app.post('/transcribe', upload.array('uploads'), async (req, res) => {
+app.post('/transcribe', upload.array('uploads[]'), async (req, res) => {
   log.verbose('transcribe', req.files.length + ' files uploaded')
   let audioFiles = req.files.filter(f => audioMimes.includes(f.mimetype))
   let documentFiles = req.files.filter(f => documentMimes.includes(f.mimetype))

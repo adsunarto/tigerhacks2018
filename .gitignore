@@ -68,3 +68,6 @@ typings/
 service_account_sr.json
 
 *.txt
+*.docx
+*.odt
+*.rtf
