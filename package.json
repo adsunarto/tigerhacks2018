@@ -1,0 +1,31 @@
+{
+  "name": "tigerhacks2018",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itotallyrock/tigerhacks2018.git"
+  },
+  "author": "Jeffrey Meyer, Bayli Boston, Jose Alega, Andrew Sunarto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itotallyrock/tigerhacks2018/issues"
+  },
+  "homepage": "https://github.com/itotallyrock/tigerhacks2018#readme",
+  "dependencies": {
+    "@google-cloud/speech": "^2.1.1",
+    "@google-cloud/translate": "^2.1.2",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.4",
+    "helmet": "^3.14.0",
+    "mime-types": "^2.1.20",
+    "multer": "^1.4.1",
+    "npmlog": "^4.1.2",
+    "textract": "^2.4.0"
+  }
+}
