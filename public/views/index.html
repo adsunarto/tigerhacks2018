@@ -6,6 +6,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.0.0/trix.css" />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
@@ -16,44 +17,113 @@
       <script src="/js/main.js"></script>
       <script src="/js/upload.js" charset="utf-8"></script>
       <link rel="stylesheet" href="/styles/styles.css">
+      <link rel="shortcut icon" href="/img/Maestro.png">
   </head>
 
   <body>
-    <div id="closest">
-      <div class="row" id="stage-1">
+    <div id="container">
+      <div class="row stage-1">
           <div class="col-4">
-            <div class="audio-box">
-              <div id="drop-zone">
-                  Drop files here...
-                  <div id="clickHere">
-                      <label class="btn btn-primary">
-                        Upload<input type="file" name="dropbox" id="file" multiple hidden/>
-                      </label>
+            <div class="row">
+              <div class="col-12">
+                <div class="card" id="options">
+                  <div class="card-body">
+                    <h5 class="card-title">About</h5>
+                    <p><img id="logo" width="48" src="/img/Maestro.png" alt="Maestro Logo">Maestro allows you to easily transcribe, translate, and
+                    transform any article you want.  Simply supply existing
+                    document or audio files to the drop area and watch them all
+                    load in where you can edit them directly.</p>
+
+                    <p>Once satisfied you can move on to the translation, and
+                    summarization stage.  Here you can make use of our
+                    hand-crafted summarization algorithm or use Google's top of
+                    the line translation service to make your document
+                    accessible in any language.</p>
                   </div>
+                </div>
               </div>
-              <button class='btn' disabled id="record">Record</button>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="card" id="options">
+                  <div class="card-header">Options</div>
+                  <div class="card-body">
+                    <label>
+                      Translation Output
+                      <select class="form-control" name="targetLocale">
+                        <option value="es">Espanol</option>
+                        <option value="de">Deutsch</option>
+                        <option value="fr">French</option>
+                        <option value="jp">Japanese</option>
+                      </select>
+                    </label>
+                    <label>
+                      Summary Length
+                      <input type="number" name="sentences" value="6">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="audio-box card">
+                  <div id="drop-zone">
+                      Drop audio or document files here...
+                      <div id="clickHere">
+                          <label class="btn btn-primary">
+                            Upload<input type="file" name="dropbox" id="file" multiple hidden/>
+                          </label>
+                      </div>
+                  </div>
+                  <button class='btn' disabled id="record" style="cursor: not-allowed;">Record <i class="fas fa-microphone"></i></button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="col-8">
+          <div class="col-8 card" style="height: 80%;">
               <trix-editor class="tx1" placeholder="Edit Me"></trix-editor>
-              <a href="#" class="btn btn-primary next-page">Next</a>
           </div>
       </div>
 
-      <div class=row id="stage-2" >
-        <div class="col-6">
-          <h1>English</h1>
-          <trix-editor class="tx2"></trix-editor>
-        </div>
+      <div class="stage-2" >
+        <div class="row">
+          <div class="col-6">
+            <div class="card">
+              <h1>English</h1>
+              <trix-editor class="tx2"></trix-editor>
+            </div>
+          </div>
 
-        <div class="col-6">
-          <h1 class="output-locale">Translated <a href="#" id="translate-btn" class="btn btn-secondary" data-toggle="modal" data-target="#overwrite-warning">Translate</a></h1>
-          <trix-editor class="tx3"></trix-editor>
+          <div class="col-6" id="translated">
+            <div class="card">
+              <h1 class="output-locale">Translated <button id="translate-btn" class="btn btn-secondary" data-toggle="modal" data-target="#overwrite-warning">Translate</button></h1>
+              <trix-editor class="tx3"></trix-editor>
+            </div>
+          </div>
         </div>
-        <a href="#" class="btn btn-secondary prev-page">Previous</a>
+        <div class="row" style="margin-top: 30px;">
+          <div class="col-12">
+            <div class="card" id="summary">
+              <h1>Summary <button id="summarize-btn" class="btn btn-secondary" data-toggle="modal" data-target="#summary-warning">Summarize</button></h1>
+              <trix-editor class="tx4"></trix-editor>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <div class="btn-group">
+    <footer class="row">
+      <div class="col-3">
+        <button class="btn btn-primary prev-page stage-2">Previous</button>
+      </div>
+      <div class="col-6">
+        Licenced under MIT, 2018 | Created for <a href="">TigerHacks2018</a> | Fork us on <a href="https://github.com/itotallyrock/tigerhacks2018" target="_blank"><i class="fab fa-github"></i></a>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-primary next-page stage-1">Next</button>
+        <div class="btn-group stage-2">
           <button type="button" class="btn btn-success">Download</button>
           <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
@@ -67,7 +137,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </footer>
 
 
     <div class="modal" id="overwrite-warning" tabindex="-1" role="dialog">
@@ -83,8 +153,28 @@
             <p>Translating again will overwrite any existing translation.  Are you sure?</p>
           </div>
           <div class="modal-footer">
-            <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
-            <a href="#" class="btn btn-primary translate" data-dismiss="modal">Translate</a>
+            <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary translate" data-dismiss="modal">Translate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="summary-warning" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Summarize Overwrite</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Summarizing again will overwrite any existing translation.  Are you sure?</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary summarize" data-dismiss="modal">Summarize</button>
           </div>
         </div>
       </div>

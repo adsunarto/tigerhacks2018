@@ -5,28 +5,30 @@ const defaultState = {
   previousStage: null,
   documentContents: '',
   translatedContents: '',
+  summarizedContents: '',
   targetLocale: 'es',
   summaryLength: 6,
-  translated: false
+  translated: false,
+  summarized: false
 }
 
 const stages = [{
   query: '#stage-1',
   load: () => {
-    $('#stage-1').show()
+    $('.stage-1').show()
   },
   unload: () => {
     $('.tx2')[0].editor.loadHTML($('.tx1')[0].value)
-    $('#stage-1').hide()
+    $('.stage-1').hide()
   }
 }, {
   query: '#stage-2',
   load: () => {
-    $('#stage-2').show()
+    $('.stage-2').show()
   },
   unload: () => {
     $('.tx1')[0].editor.loadHTML($('.tx2')[0].value)
-    $('#stage-2').hide()
+    $('.stage-2').hide()
   }
 }]
 
@@ -67,8 +69,6 @@ function prevPage() {
 }
 
 async function translate() {
-  console.log('TRANS')
-  // TODO: Request to translate
   let response
   try {
     response = await (await fetch('/api/translate/' + state.targetLocale, {
@@ -84,7 +84,6 @@ async function translate() {
     response = 'Error translating.'
   }
 
-  console.log('RE', response);
   $('.tx3')[0].editor.loadHTML(response)
   setState({
     translated: true,
@@ -92,13 +91,51 @@ async function translate() {
   })
 }
 
+async function summarize() {
+  console.log('SUMM')
+  let response
+  try {
+    response = await (await fetch('/api/summary/' + state.summaryLength, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        text: $('.tx2')[0].editor.composition.document.toString()
+      })
+    })).text()
+  } catch (e) {
+    response = 'Error summarizing.'
+  }
+
+  console.log('RE', response);
+  $('.tx4')[0].editor.loadHTML(response)
+  setState({
+    summarizedContents: response,
+    summarized: true
+  })
+}
+
 $(() => {
   setState(JSON.parse(localStorage.getItem('state') || '{}'))
   loadEditors()
   hideInactiveStages()
-  $('a.next-page').on('click', nextPage)
-  $('a.prev-page').on('click', prevPage)
-  $('a.translate').on('click', translate)
+  $('button.next-page').on('click', nextPage)
+  $('button.prev-page').on('click', prevPage)
+  $('button.translate').on('click', translate)
+  $('button.summarize').on('click', summarize)
+
+  $('#options select[name="targetLocale"]').on('change', function (e) {
+    setState({
+      targetLocale: this.value
+    })
+  })
+
+  $('#options input[name="sentences"]').on('change', function (e) {
+    setState({
+      summaryLength: this.value
+    })
+  })
 
   $('.tx3').on('trix-change', function () {
     setState({
