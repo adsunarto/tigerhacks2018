@@ -1,3 +1,106 @@
+
+let state = {}
+const defaultState = {
+  currentStage: 0,
+  previousStage: null,
+  documentContents: '',
+  translatedContents: '',
+  targetLocale: 'es',
+  summaryLength: 6,
+  translated: false
+}
+
+const stages = [{
+  query: '#stage-1',
+  load: () => {
+    $('#stage-1').show()
+  },
+  unload: () => {
+    $('.tx2')[0].editor.loadHTML($('.tx1')[0].value)
+    $('#stage-1').hide()
+  }
+}, {
+  query: '#stage-2',
+  load: () => {
+    $('#stage-2').show()
+  },
+  unload: () => {
+    $('.tx1')[0].editor.loadHTML($('.tx2')[0].value)
+    $('#stage-2').hide()
+  }
+}]
+
+function setState(newState) {
+  Object.assign(state, defaultState, newState)
+  localStorage.setItem('state', JSON.stringify(state))
+}
+
+function loadEditors() {
+  $('.tx1')[0].editor.loadHTML(state.documentContents)
+  $('.tx2')[0].editor.loadHTML(state.documentContents)
+  $('.tx3')[0].editor.loadHTML(state.translatedContents)
+}
+
+function hideInactiveStages() {
+  stages.filter((s, i) => i != state.currentStage).forEach(stage => stage.unload())
+}
+
+function updateStage() {
+  stages[state.previousStage].unload()
+  stages[state.currentStage].load()
+}
+
+function nextPage() {
+  setState({
+    previousStage: state.currentStage,
+    currentStage: Math.min(stages.length - 1, state.currentStage + 1)
+  })
+  updateStage()
+}
+
+function prevPage() {
+  setState({
+    previousStage: state.currentStage,
+    currentStage: Math.max(0, state.currentStage - 1)
+  })
+  updateStage()
+}
+
+async function translate() {
+  console.log('TRANS')
+  // TODO: Request to translate
+  $('.tx3')[0].editor.loadHTML('TODO')
+  setState({
+    translated: true
+  })
+}
+
+$(() => {
+  setState(JSON.parse(localStorage.getItem('state') || '{}'))
+  loadEditors()
+  hideInactiveStages()
+  $('a.next-page').on('click', nextPage)
+  $('a.prev-page').on('click', prevPage)
+  $('a.translate').on('click', translate)
+
+  $('.tx3').on('trix-change', function () {
+    setState({
+      translatedContents: this.value
+    })
+  })
+  $('.tx1').on('trix-change', function () {
+    setState({
+      documentContents: this.value
+    })
+  })
+  $('.tx2').on('trix-change', function () {
+    setState({
+      documentContents: this.value
+    })
+  })
+})
+
+/*
 $(function () {
   var dropZoneId = "drop-zone";
   var buttonId = "clickHere";
@@ -47,7 +150,7 @@ $(function () {
       $("#" + dropZoneId).removeClass(mouseOverClass);
   }, true);
 
-  // var url = "http://161.130.188.235/api/transcribe"  
+  // var url = "http://161.130.188.235/api/transcribe"
   // let fileInput = document.querySelector('input[name="file"]');
   //   fileInput.addEventListener('change', () => {
   //     let formData = new FormData();
@@ -59,12 +162,19 @@ $(function () {
   //     let request = new XMLHttpRequest();
   //     request.open("POST", url);
   //     request.send(formData);
-  // })  
-  
+  // })
+
+  function updateView() {
+
+  }
+
+  const STAGES = ['TRANSCRIPT', 'TRANSLATE', 'TRANSFORM']
+  let stage = 0
   $('#next').on('click', function(e){
-    $(e.target).closest('#page1').css('display', 'none');
-    $(e.target).closest('#closest').find("#page2").css('visibility', 'visible');    
+    stage++
+    $(e.target).closest('#page1').
+    $(e.target).closest('#closest').find("#page2").css('display', 'visible');
 
   });
 
-})
+})*/

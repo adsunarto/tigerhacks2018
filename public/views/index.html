@@ -1,47 +1,94 @@
 <html>
   <head>
-      <title>TigerHacks2018</title>            
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>     
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.0.0/trix.js"></script>  
+      <title>TigerHacks2018</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.0.0/trix.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.0.0/trix.css" />
+
       <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap-grid.min.css" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.0.0/trix.css" />  
-      <script src="../js/main.js"></script>
-      <link rel="stylesheet" href="../styles/styles.css">   
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.css">
+
+      <script src="/js/main.js"></script>
+      <script src="/js/upload.js" charset="utf-8"></script>
+      <link rel="stylesheet" href="/styles/styles.css">
   </head>
 
   <body>
     <div id="closest">
-      <div class="row" id="page1">      
+      <div class="row" id="stage-1">
           <div class="col-4">
-            <div id="drop-zone">
-                Drop files here...
-                <div id="clickHere">
-                    or click here..                     
-                    <input type="file" name="file" id="file" />                    
-                </div>
-            </div>                       
-            <button id="record">Record</button>
+            <div class="audio-box">
+              <div id="drop-zone">
+                  Drop files here...
+                  <div id="clickHere">
+                      <label class="btn btn-primary">
+                        Upload<input type="file" name="dropbox" id="file" multiple hidden/>
+                      </label>
+                  </div>
+              </div>
+              <button class='btn' disabled id="record">Record</button>
+            </div>
           </div>
 
           <div class="col-8">
               <trix-editor class="tx1" placeholder="Edit Me"></trix-editor>
-              <button id="next">Next</button>           
-          </div>      
-      </div> 
-        
-      <div class=row id="page2" >
+              <a href="#" class="btn btn-primary next-page">Next</a>
+          </div>
+      </div>
+
+      <div class=row id="stage-2" >
         <div class="col-6">
-          <trix-editor class="tx2"></trix-editor>
-        </div>
-        
-        <div class="col-6">
+          <h1>English</h1>
           <trix-editor class="tx2"></trix-editor>
         </div>
 
-        <button id="download">Download</button>
+        <div class="col-6">
+          <h1 class="output-locale">Translated <a href="#" id="translate-btn" class="btn btn-secondary" data-toggle="modal" data-target="#overwrite-warning">Translate</a></h1>
+          <trix-editor class="tx3"></trix-editor>
+        </div>
+        <a href="#" class="btn btn-secondary prev-page">Previous</a>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-success">Download</button>
+          <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Download Document (default)</a>
+            <a class="dropdown-item" href="#">Download Transcript</a>
+            <a class="dropdown-item" href="#">Download Media (.zip)</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Download all (.zip)</a>
+          </div>
+        </div>
       </div>
-    </div>    
+    </div>
+
+
+    <div class="modal" id="overwrite-warning" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Translate Overwrite</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Translating again will overwrite any existing translation.  Are you sure?</p>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+            <a href="#" class="btn btn-primary translate" data-dismiss="modal">Translate</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 
 </html>
