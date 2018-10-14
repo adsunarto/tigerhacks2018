@@ -8,8 +8,9 @@ nlp = spacy.load('en_core_web_sm')
 args = sys.argv
 num_of_sen = int(args[1])
 file_name = args[2]
-fin = open(file_name, 'r')
-text_input = fin.read()
+with open(file_name, 'r') as fin:
+    text_input = fin.read()
+    text_input = text_input.replace('\n', '').replace('\r', '')
 doc = nlp(text_input)
 
 # Adds an occurence of a word to the map of occurences
@@ -23,13 +24,13 @@ def occurence(word):
 # Parses through all words in document and applies function to them.
 def word_parse(words, func):
     for word in words:
-        if word.pos_ is "PUNCT" or word.pos_ == "SPACE":
+        if word.pos_ is "PUNCT" or word.pos_ == "SPACE" or word.pos_ == "SYM":
             continue
 
         func(word)
 # Acesses The number of occurences for the word in dictionary occurences
 def point(word):
-    return occurences.get(word)
+    return occurences.get(word, 0)
 
 # A class of substrings containing points
 class sentence(object):
@@ -53,7 +54,7 @@ def get_sentences(words):
         s = sent.text
         ss = nlp(s)
         for p in ss:
-            if p.pos_ == "PUNCT" or p.pos_ == "SPACE":
+            if p.pos_ == "PUNCT" or p.pos_ == "SPACE" or p.pos_ == "SYM":
                 continue
             lemma = p.lemma_
             points += point(lemma)
