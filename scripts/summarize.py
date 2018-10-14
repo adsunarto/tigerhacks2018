@@ -7,10 +7,8 @@ import sys
 nlp = spacy.load('en_core_web_sm')
 args = sys.argv
 num_of_sen = int(args[1])
-file_name = args[2]
-with open(file_name, 'r') as fin:
-    text_input = fin.read()
-    text_input = text_input.replace('\n', '').replace('\r', '')
+text_input = sys.stdin.read()
+text_input = text_input.replace('\n', '').replace('\r', '')
 doc = nlp(text_input)
 
 # Adds an occurence of a word to the map of occurences
