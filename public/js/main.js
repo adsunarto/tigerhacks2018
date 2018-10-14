@@ -6,7 +6,7 @@ const defaultState = {
   documentContents: '',
   translatedContents: '',
   summarizedContents: '',
-  targetLocale: 'es',
+  targetLocale: 'en',
   summaryLength: 6,
   translated: false,
   summarized: false
