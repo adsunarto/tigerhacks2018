@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', api)
 
-app.use(express.static('../public'))
+app.use(express.static(path.join(__dirname, '../public')))
 
 app.listen(5000, () => {
   log.info('server', 'Server listening on 5000')
