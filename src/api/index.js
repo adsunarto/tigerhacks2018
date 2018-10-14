@@ -132,8 +132,20 @@ app.post('/translate/:language', bodyParser.text(), async (req, res) => {
   }
 })
 
-app.post('/summary/:length', (req, res) => {
+app.post('/summary/:length', async (req, res) => {
   let sentences = req.params['length']
+  try {
+    let summary = await new Promise((resolve, reject) => {
+      exec(`echo "${req.body.text}" | python3 ${path.join(__dirname, '../../scripts/summarize.py')} ${sentences}`, (err, s) => {
+        if (err) return reject(err)
+        return resolve(s)
+      })
+    })
+    return res.send(summary)
+  } catch (e) {
+    log.warn('summarize', 'error summarizing', e.message)
+    return res.status(500).send('Error summarizing text.')
+  }
 })
 
 module.exports = app
